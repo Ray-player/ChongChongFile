@@ -3,101 +3,165 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>输入框示例</title>
+    <title>鸭梨傻计算器</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 40px;
+            background-color: rgb(208, 229, 198);
         }
 
         .container {
-            max-width: 600px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start; /* 修改对齐方式为顶部对齐 */
+            max-width: 800px;
             margin: 0 auto;
+            gap: 30px;
+        }
+
+        .input-box {
+            flex: 1 1 60%;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-self: flex-start; /* 确保内容顶部对齐 */
+        }
+
+        .actions-box {
+            display: flex;
+            gap: 10px; /* 缩小基础间距 */
+            width: 100%;
+            flex-wrap: nowrap; /* 强制水平排列 */
+            overflow-x: auto; /* 超出时允许水平滚动 */
+        }
+
+        .options-box {
+            flex: 0 0 auto; /* 固定宽度，不伸缩 */
+            min-width: 180px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .output-box {
+            flex: 0 0 auto; /* 固定宽度，不伸缩 */
+            min-width: 200px;
+            box-sizing: border-box;
+        }
+
+        .output {
+            flex: 1;
+            padding: 20px;
+            font-weight: bold;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-sizing: border-box;
         }
 
         .input-group {
             margin-bottom: 15px;
+            display: block; /* 确保每个输入组独占一行 */
         }
 
         label {
             display: block;
             margin-bottom: 5px;
+            width: 100%; /* 强制标签占满整行 */
         }
 
         input[type="number"] {
             width: 100%;
             padding: 8px;
             box-sizing: border-box;
+            display: block; /* 确保输入框独占一行 */
+            margin-bottom: 10px; /* 添加底部间距保持视觉节奏 */
         }
 
-        .checkboxes {
-            margin-bottom: 15px;
-        }
-
-        .output {
-            margin-top: 20px;
-            font-weight: bold;
+        .damage-text {
+            font-size: 20px;
+            margin-top: 0;
+            margin-bottom: 0;
+            padding: 0;
         }
     </style>
-</head>
 
 <body>
     <div class="container">
-        <h1 style="text-align: center;font-size: 25px;">鸭梨傻的虫虫计算器</h1>
-        <div id="inputs" class="input-group"></div>
-
-        <div class="checkboxes">
-            <label><input type="checkbox" name="option1"> 选项 1</label>
-            <label><input type="checkbox" name="option2"> 选项 2</label>
-            <label><input type="checkbox" name="option3"> 选项 3</label>
+        <div class="input-box">
+            <h1 style="text-align: center;font-size: 25px;margin-top:0;">鸭梨傻的虫虫计算器</h1>
+            <div id="inputs" class="input-group">
+                <div class="input-group">
+                    <label for="num1">总费用?</label>
+                    <input type="number" id="num1" min="0" required>
+                </div>
+                <div class="input-group">
+                    <label for="num2">有多少走脸伤害?</label>
+                    <input type="number" id="num2" min="0" required>
+                </div>
+                <div class="input-group">
+                    <label for="num3">有几张0费?</label>
+                    <input type="number" id="num3" min="0" required>
+                </div>
+                <div class="input-group">
+                    <label for="num4">有几张1费?</label>
+                    <input type="number" id="num4" min="0" required>
+                </div>
+                <div class="input-group">
+                    <label for="num5">护符加攻?</label>
+                    <input type="number" id="num5" min="0" required>
+                </div>
+            </div>
+            <div class="damage-text"></div>
         </div>
-
-        <button onclick="calculate()">计算</button>
-
-        <div class="output" id="result"></div>
+        <div class="actions-box">
+            <div class="options-box">
+                <div class="checkboxes">
+                    <label><input type="checkbox" name="option1"> 1费回虫模式</label>
+                    <label><input type="checkbox" name="option2"> 有无超进化点</label>
+                    <label><input type="checkbox" name="option3"> 超进化宝石兽</label>
+                </div>
+                <button onclick="calculate()" style="width: 120px; height: 40px; font-size: 16px; padding: 0; margin: 0; box-sizing: border-box;">计算</button>
+            </div>
+            <div class="output-box">
+                <div style="font-size: 20px; margin-top: 0;">伤害</div> <!-- 添加显式顶部间距控制 -->
+                <div class="output" style="font-size: 40px;color: rgb(255, 0, 0);">
+                    <span id="result"></span>
+                </div>
+                <div></div>
+            </div>
+        </div>
     </div>
-
-    <script>
-        // 创建五个输入框
-        const inputsContainer = document.getElementById('inputs');
-        for (let i = 1; i <= 5; i++) {
-            const div = document.createElement('div');
-            div.className = 'input-group';
-
-            const label = document.createElement('label');
-            label.textContent = `输入整数 ${i}:`;
-
-            const input = document.createElement('input');
-            input.type = 'number';
-            input.min = '0';
-            input.required = true;
-
-            div.appendChild(label);
-            div.appendChild(input);
-            inputsContainer.appendChild(div);
-        }
-
-        function calculate() {
-            // 获取所有输入值
-            const inputs = document.querySelectorAll('#inputs input[type="number"]');
-            let sum = 0;
-            inputs.forEach(input => {
-                if (input.value) {
-                    sum += parseInt(input.value);
-                }
-            });
-
-            // 获取选中的勾选框
-            const checkboxes = document.querySelectorAll('.checkboxes input[type="checkbox"]:checked');
-            const selectedOptions = Array.from(checkboxes).map(cb => cb.name);
-
-            // 显示结果
-            document.getElementById('result').innerHTML = `
-                输入值总和: ${sum}<br>
-                选中的选项: ${selectedOptions.length ? selectedOptions.join(', ') : '无'}
-            `;
-        }
-    </script>
 </body>
+<script>
+    function calculate() {
+        // 获取输入框并转换为数值数组
+        const inputElements = document.querySelectorAll('#inputs input[type="number"]');
+        const inputValues = Array.from(inputElements).map(input => 
+            input.value ? parseInt(input.value) : 0
+        );
+
+        // 获取选中的选项
+        const checkboxElements = document.querySelectorAll('.checkboxes input[type="checkbox"]:checked');
+        const selectedOptions = Array.from(checkboxElements).map(cb => cb.name);
+
+        // 执行计算（示例：总和 + 选项系数）
+        const sum = inputValues.reduce((acc, val) => acc + val, 0);
+        const optionFactor = selectedOptions.length * 10; // 选项系数计算
+        const totalResult = sum + optionFactor;
+
+        // 更新输出区域
+        document.getElementById('result').innerHTML = `
+
+        `;
+            /*输入值数组: [${inputValues.join(',')}]<br>
+            选中选项: ${selectedOptions.length ? selectedOptions.join(', ') : '无'}<br>
+            计算结果: ${totalResult}
+            */
+    }
+</script>
 
 </html>
