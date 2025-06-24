@@ -211,16 +211,16 @@
 <body>
     <!-- 新增移动端专用帮助框 -->
     <div class="mobile-helper">
-        该计算器默认虫虫不缺或者有护符回收,如果使用法术回收请在下方勾选。
+        该计算器默认双虫或者有护符回收,如果使用法术回收请在下方勾选。
     </div>
     <div class="container">
         <div class="input-box">
             <h1 style="text-align: center;font-size: 25px;margin-top:0;" onmouseover="showHelperText(true)" onmouseout="showHelperText(false)">鸭梨傻的虫虫计算器</h1>
-            <div id="helper-text">该计算器默认虫虫不缺或者有护符回收,如果使用法术回收请在下方勾选。</div>
+            <div id="helper-text">该计算器默认双虫或者有护符回收,如果使用法术回收请在下方勾选。</div>
             <div id="inputs" class="input-group">
                 <div class="input-group">
                     <label for="num1">总费用?</label>
-                    <input type="number" id="num1" min="6" value="8" required>
+                    <input type="number" id="num1" min="0" value="8" required>
                 </div>
                 <div class="input-group">
                     <label for="num2">随从走脸伤害?</label>
@@ -253,7 +253,7 @@
             </div>
             <div class="output-box">
                 <div style="font-size: 25px; margin-top: 0;font-weight: bold">伤害：</div> <!-- 添加显式顶部间距控制 -->
-                <div class="output" style="font-size: 40px;color: rgb(255, 0, 0);" id="result">
+                <div class="output" style="font-size: 40px;color: rgb(30, 255, 0);" id="result">
                     
                 </div>
                 <div></div>
@@ -317,10 +317,17 @@
             OutDamage -= 1;
         }
         OutDamage+=inputValues[1];
+        if(inputValues[0]<6){
+            document.getElementById('result').innerHTML = `
+         斩不了喵!
+        `;
+        }
+        else{
         // 更新输出区域
         document.getElementById('result').innerHTML = `
-         斩：${OutDamage}
+         斩 ${OutDamage} !
         `;
+    }
 
     }
 
