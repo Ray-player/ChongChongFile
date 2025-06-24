@@ -10,7 +10,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 40px;
+            margin: 1%;
             background-color: rgb(208, 229, 198);
         }
 
@@ -19,8 +19,8 @@
             flex-wrap: wrap;
             align-items: flex-start;
             max-width: 800px;
-            margin: 0 auto;
-            gap: 30px;
+            margin: auto;
+            gap: 0px;
             position: relative;
             z-index: 1;
         }
@@ -54,6 +54,8 @@
             background-position: center;
             z-index: 1;
             opacity: 0.85; /* 添加整体透明度 */
+            margin-top: 2%; /* 增加顶部间距 */
+            margin-left: 2%;
         }
 
         .actions-box {
@@ -65,6 +67,7 @@
             /* 强制水平排列 */
             overflow-x: auto;
             /* 超出时允许水平滚动 */
+            margin-left: 2%;
         }
 
         .options-box {
@@ -171,18 +174,21 @@
         @media (max-width: 600px) {
             .container {
                 flex-direction: column;
-                padding: 15px;
                 max-width: 100%;
+                margin: 0.5%;
             }
 
             .input-box {
                 max-width: 100%;
                 margin-bottom: 20px;
+                margin-top: 1%;
+                margin-left: 1%;
             }
 
             .actions-box {
                 flex-wrap: wrap;
                 gap: 15px;
+                margin-left: 1%;
             }
 
             /* 显示移动端帮助框 */
@@ -319,7 +325,7 @@
         if (selectedNames.includes("option1")) {
             OutDamage -= 1;
         }
-        OutDamage+=inputValues[1];
+        OutDamage+=inputValues[1]+inputValues[4];
         if(inputValues[0]<6){
             document.getElementById('result').innerHTML = `
          斩不了喵!
