@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>鸭梨傻计算器</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -149,6 +152,41 @@
             padding: 0.3125em; /* 5px -> 0.3125em */
             background-color: #e2f7cfc9;
             border-radius: 4px; /* 遵循CSS圆角规范 */
+        }
+
+        /* 响应式布局调整 */
+        @media (max-width: 600px) {
+            .container {
+                flex-direction: column;
+                padding: 15px;
+                max-width: 100%;
+            }
+
+            .input-box {
+                max-width: 100%;
+                margin-bottom: 20px;
+            }
+
+            .actions-box {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            input[type="number"] {
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+            }
+
+            .damage-text {
+                font-size: 18px;
+            }
+
+            h1 {
+                font-size: 1.4em;
+                margin-top: 1em;
+                padding: 0.25em;
+            }
         }
     </style>
 
