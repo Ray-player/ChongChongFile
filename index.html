@@ -240,6 +240,7 @@
         if (selectedNames.includes("option1")) {
             OutDamage -= 1;
         }
+        OutDamage+=inputValues[1];
         // 更新输出区域
         document.getElementById('result').innerHTML = `
          斩：${OutDamage}
