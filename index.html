@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>输入框示例</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .checkboxes {
+            margin-bottom: 15px;
+        }
+
+        .output {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 style="text-align: center;font-size: 25px;">鸭梨傻的虫虫计算器</h1>
+        <div id="inputs" class="input-group"></div>
+
+        <div class="checkboxes">
+            <label><input type="checkbox" name="option1"> 选项 1</label>
+            <label><input type="checkbox" name="option2"> 选项 2</label>
+            <label><input type="checkbox" name="option3"> 选项 3</label>
+        </div>
+
+        <button onclick="calculate()">计算</button>
+
+        <div class="output" id="result"></div>
+    </div>
+
+    <script>
+        // 创建五个输入框
+        const inputsContainer = document.getElementById('inputs');
+        for (let i = 1; i <= 5; i++) {
+            const div = document.createElement('div');
+            div.className = 'input-group';
+
+            const label = document.createElement('label');
+            label.textContent = `输入整数 ${i}:`;
+
+            const input = document.createElement('input');
+            input.type = 'number';
+            input.min = '0';
+            input.required = true;
+
+            div.appendChild(label);
+            div.appendChild(input);
+            inputsContainer.appendChild(div);
+        }
+
+        function calculate() {
+            // 获取所有输入值
+            const inputs = document.querySelectorAll('#inputs input[type="number"]');
+            let sum = 0;
+            inputs.forEach(input => {
+                if (input.value) {
+                    sum += parseInt(input.value);
+                }
+            });
+
+            // 获取选中的勾选框
+            const checkboxes = document.querySelectorAll('.checkboxes input[type="checkbox"]:checked');
+            const selectedOptions = Array.from(checkboxes).map(cb => cb.name);
+
+            // 显示结果
+            document.getElementById('result').innerHTML = `
+                输入值总和: ${sum}<br>
+                选中的选项: ${selectedOptions.length ? selectedOptions.join(', ') : '无'}
+            `;
+        }
+    </script>
+</body>
+
+</html>
