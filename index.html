@@ -154,6 +154,19 @@
             border-radius: 4px; /* 遵循CSS圆角规范 */
         }
 
+        /* 移动端帮助框样式 */
+        .mobile-helper {
+            display: none;
+            padding: 8px;
+            background-color: #e8e9a9d2;
+            border: 1px solid #ccc;
+            color: #ff0000;
+            font-size: 14px;
+            margin-top: 15px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
         /* 响应式布局调整 */
         @media (max-width: 600px) {
             .container {
@@ -170,6 +183,11 @@
             .actions-box {
                 flex-wrap: wrap;
                 gap: 15px;
+            }
+
+            /* 显示移动端帮助框 */
+            .mobile-helper {
+                display: block;
             }
 
             input[type="number"] {
@@ -223,8 +241,8 @@
             <div class="options-box">
                 <div class="checkboxes">
                     <label><input type="checkbox" name="option1"> 1费法术回虫</label>
-                    <label><input type="checkbox" name="option2" checked> 有无超进化点</label>
-                    <label><input type="checkbox" name="option3"> 超进化宝石兽</label>
+                    <label><input type="checkbox" id="option2" name="option2" checked> 有无超进化点</label>
+                    <label><input type="checkbox" id="option3" name="option3"> 超进化宝石兽</label>
                 </div>
                 <button onclick="calculate()"
                     style="width: 120px; height: 40px; font-size: 16px; padding: 0; margin: 0; box-sizing: border-box;">计算</button>
@@ -238,7 +256,27 @@
             </div>
         </div>
     </div>
+    <!-- 新增移动端专用帮助框 -->
+    <div class="mobile-helper">
+        该计算器默认虫虫不缺或者有护符回收,如果使用法术回收请在下方勾选。
+    </div>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const option2 = document.getElementById('option2');
+        const option3 = document.getElementById('option3');
+
+        // 初始化状态
+        option3.disabled = !option2.checked;
+        if (!option2.checked) option3.checked = false;
+
+        // 监听状态变化
+        option2.addEventListener('change', function() {
+            option3.disabled = !this.checked;
+            if (!this.checked) option3.checked = false;
+        });
+    });
+</script>
 <script>
     function calculate() {
         // 获取输入框并转换为数值数组
