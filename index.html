@@ -14,31 +14,59 @@
         .container {
             display: flex;
             flex-wrap: wrap;
-            align-items: flex-start; /* 修改对齐方式为顶部对齐 */
+            align-items: flex-start;
             max-width: 800px;
             margin: 0 auto;
             gap: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://i.imgs.ovh/2025/06/24/RLgFY.jpeg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.7;
+            z-index: -1;
+            /* 独立控制背景图层样式 */
         }
 
         .input-box {
             flex: 1 1 60%;
             min-width: 300px;
+            max-width: 400px; /* 添加最大宽度限制 */
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            align-self: flex-start; /* 确保内容顶部对齐 */
+            align-self: flex-start;
+            position: relative;
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+            opacity: 0.85; /* 添加整体透明度 */
         }
 
         .actions-box {
             display: flex;
-            gap: 10px; /* 缩小基础间距 */
+            gap: 10px;
+            /* 缩小基础间距 */
             width: 100%;
-            flex-wrap: nowrap; /* 强制水平排列 */
-            overflow-x: auto; /* 超出时允许水平滚动 */
+            flex-wrap: nowrap;
+            /* 强制水平排列 */
+            overflow-x: auto;
+            /* 超出时允许水平滚动 */
         }
 
         .options-box {
-            flex: 0 0 auto; /* 固定宽度，不伸缩 */
+            flex: 0 0 auto;
+            /* 固定宽度，不伸缩 */
             min-width: 180px;
             display: flex;
             flex-direction: column;
@@ -46,39 +74,50 @@
         }
 
         .output-box {
-            flex: 0 0 auto; /* 固定宽度，不伸缩 */
+            flex: 0 0 auto;
+            /* 固定宽度，不伸缩 */
             min-width: 200px;
             box-sizing: border-box;
+            transition: background-image 0.5s ease;
+            /* 添加背景图控制属性 */
+            background-size: cover;
+            background-position: center;
         }
 
         .output {
             flex: 1;
-            padding: 20px;
+            padding: -5px;
             font-weight: bold;
             min-height: 150px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
+            /* 改为顶部对齐 */
             box-sizing: border-box;
         }
 
         .input-group {
             margin-bottom: 15px;
-            display: block; /* 确保每个输入组独占一行 */
+            display: block;
+            /* 确保每个输入组独占一行 */
         }
 
         label {
             display: block;
             margin-bottom: 5px;
-            width: 100%; /* 强制标签占满整行 */
+            width: 100%;
+            font-weight: bold; /* 添加粗体样式 */
         }
 
         input[type="number"] {
-            width: 100%;
+            width: 150px;
             padding: 8px;
             box-sizing: border-box;
-            display: block; /* 确保输入框独占一行 */
-            margin-bottom: 10px; /* 添加底部间距保持视觉节奏 */
+            display: block;
+            margin-bottom: 10px;
+            border-radius: 4px; /* 添加圆角 */
+            border: 1px solid #ccc; /* 统一边框样式 */
+            background-color: rgba(255, 255, 255, 0.7); /* 半透明背景 */
         }
 
         .damage-text {
@@ -87,19 +126,44 @@
             margin-bottom: 0;
             padding: 0;
         }
+
+        #helper-text {
+            position: absolute;
+            top: 0px;
+            left: 0;
+            z-index: 10;
+            background-color: #e8e9a9d2;
+            border: 1px solid #ccc;
+            padding: 8px;
+            font-size: 14px;
+            color: #ff0000;
+            width: 100%;
+            box-sizing: border-box;
+            display: none;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.5625em; /* 25px -> 1.5625em (基于16px基准) */
+            margin-top: 1.25em; /* 20px -> 1.25em */
+            padding: 0.3125em; /* 5px -> 0.3125em */
+            background-color: #e2f7cfc9;
+            border-radius: 4px; /* 遵循CSS圆角规范 */
+        }
     </style>
 
 <body>
     <div class="container">
         <div class="input-box">
-            <h1 style="text-align: center;font-size: 25px;margin-top:0;">鸭梨傻的虫虫计算器</h1>
+            <h1 style="text-align: center;font-size: 25px;margin-top:0;" onmouseover="showHelperText(true)" onmouseout="showHelperText(false)">鸭梨傻的虫虫计算器</h1>
+            <div id="helper-text">该计算器默认虫虫不缺或者有护符回收,如果使用法术回收请在下方勾选。</div>
             <div id="inputs" class="input-group">
                 <div class="input-group">
                     <label for="num1">总费用?</label>
                     <input type="number" id="num1" min="0" value="8" required>
                 </div>
                 <div class="input-group">
-                    <label for="num2">有多少走脸伤害?</label>
+                    <label for="num2">随从走脸伤害?</label>
                     <input type="number" id="num2" min="0" value="0" required>
                 </div>
                 <div class="input-group">
@@ -108,7 +172,7 @@
                 </div>
                 <div class="input-group">
                     <label for="num4">有几张1费?</label>
-                    <input type="number" id="num4" min="0" va1ue="4" required>
+                    <input type="number" id="num3" min="0" value="5" required>
                 </div>
                 <div class="input-group">
                     <label for="num5">护符加攻?</label>
@@ -124,12 +188,13 @@
                     <label><input type="checkbox" name="option2" checked> 有无超进化点</label>
                     <label><input type="checkbox" name="option3"> 超进化宝石兽</label>
                 </div>
-                <button onclick="calculate()" style="width: 120px; height: 40px; font-size: 16px; padding: 0; margin: 0; box-sizing: border-box;">计算</button>
+                <button onclick="calculate()"
+                    style="width: 120px; height: 40px; font-size: 16px; padding: 0; margin: 0; box-sizing: border-box;">计算</button>
             </div>
             <div class="output-box">
-                <div style="font-size: 20px; margin-top: 0;">伤害</div> <!-- 添加显式顶部间距控制 -->
-                <div class="output" style="font-size: 40px;color: rgb(255, 0, 0);">
-                    <span id="result"></span>
+                <div style="font-size: 25px; margin-top: 0;font-weight: bold">伤害：</div> <!-- 添加显式顶部间距控制 -->
+                <div class="output" style="font-size: 40px;color: rgb(255, 0, 0);" id="result">
+                    
                 </div>
                 <div></div>
             </div>
@@ -140,35 +205,51 @@
     function calculate() {
         // 获取输入框并转换为数值数组
         const inputElements = document.querySelectorAll('#inputs input[type="number"]');
-        const inputValues = Array.from(inputElements).map(input => 
+        const inputValues = Array.from(inputElements).map(input =>
             input.value ? parseInt(input.value) : 0
         );
 
-        // 获取选中的选项
+        // 获取选中的选项名称
         const checkboxElements = document.querySelectorAll('.checkboxes input[type="checkbox"]:checked');
-        const selectedOptions = Array.from(checkboxElements).map(cb => cb.name);
+        const selectedNames = Array.from(checkboxElements).map(cb => cb.name);
 
-        //计算1费牌是否充足
-        
-        //宝石兽是否超进化
-        if(selectedOptions[2]){
+        // 计算1费牌是否充足
+        const use1cost = inputValues[0] - 6 >= inputValues[3] ? inputValues[3] : inputValues[0] - 6;
+        console.log("实际1cost数量", use1cost);
 
+        let OutDamage = 0;
+        // 判断是否有超进化点
+        if (selectedNames.includes("option2")) {
+            // 是否有宝石兽超进化
+            if (selectedNames.includes("option3")) {
+                const add1 = inputValues[3] - use1cost >= 1 ? 1 : 0;
+                OutDamage = 1+use1cost+inputValues[2]+add1;
+                console.log("宝石兽连击", OutDamage);
+                OutDamage = 2*OutDamage+2;
+            } else {
+                OutDamage =  use1cost+inputValues[2]+1;
+                OutDamage = 2*OutDamage+1;
+                OutDamage +=3;
+            }
+        } else {
+            OutDamage = use1cost+inputValues[2]+1;
+            OutDamage = 2*OutDamage+1;
         }
-        else{
 
+        // 是否启用回虫机制
+        if (selectedNames.includes("option1")) {
+            OutDamage -= 1;
         }
-        const sum = inputValues.reduce((acc, val) => acc + val, 0);
-        const optionFactor = selectedOptions.length * 10; // 选项系数计算
-        const totalResult = sum + optionFactor;
-
         // 更新输出区域
         document.getElementById('result').innerHTML = `
-
+         斩：${OutDamage}
         `;
-            /*输入值数组: [${inputValues.join(',')}]<br>
-            选中选项: ${selectedOptions.length ? selectedOptions.join(', ') : '无'}<br>
-            计算结果: ${totalResult}
-            */
+
+    }
+
+    function showHelperText(show) {
+        const helperText = document.getElementById('helper-text');
+        helperText.style.display = show ? 'block' : 'none';
     }
 </script>
 
