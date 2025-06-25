@@ -108,17 +108,20 @@
             display: block;
             /* 确保每个输入组独占一行 */
         }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            width: 100%;
-            font-weight: bold;
-            /* 添加粗体样式 */
+        
+        /* 新增水平布局样式 */
+        .input-group.horizontal {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
         }
 
         input[type="number"] {
-            width: 150px;
+            width: 120px;
+            /* 适当缩小输入框宽度 */
+            flex-shrink: 0;
+            /* 防止压缩变形 */
             padding: 8px;
             box-sizing: border-box;
             display: block;
@@ -177,6 +180,18 @@
             margin-top: 15px;
             width: 100%;
             box-sizing: border-box;
+        }
+        
+        /* 复选框区域竖向排列 */
+        .checkboxes {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        /* 移除label默认下边距 */
+        .checkboxes label {
+            margin-bottom: 0;
         }
 
         /* 响应式布局调整 */
@@ -239,23 +254,53 @@
             <div id="helper-text">该计算器默认双虫或者有护符回收,如果使用法术回收请在下方勾选;因为此计算器造成的错斩作者概不负责!</div>
             <div id="inputs" class="input-group">
                 <div class="input-group">
-                    <label for="num1">总费用?</label>
+                    <div class="input-group horizontal">
+                        <label for="num1">总费用?</label>
+                        <div class="input-controls">
+                            <button class="control-btn" onclick="decrementValue('num1')">-</button>
+                            <button class="control-btn" onclick="incrementValue('num1')">+</button>
+                        </div>
+                    </div>
                     <input type="number" id="num1" min="0" value="8" required>
                 </div>
                 <div class="input-group">
-                    <label for="num2">随从走脸伤害?</label>
+                    <div class="input-group horizontal">
+                        <label for="num2">随从走脸伤害?</label>
+                        <div class="input-controls">
+                            <button class="control-btn" onclick="decrementValue('num2')">-</button>
+                            <button class="control-btn" onclick="incrementValue('num2')">+</button>
+                        </div>
+                    </div>
                     <input type="number" id="num2" min="0" value="0" required>
                 </div>
                 <div class="input-group">
-                    <label for="num3">有几张0费?</label>
+                    <div class="input-group horizontal">
+                        <label for="num3">有几张0费?</label>
+                        <div class="input-controls">
+                            <button class="control-btn" onclick="decrementValue('num3')">-</button>
+                            <button class="control-btn" onclick="incrementValue('num3')">+</button>
+                        </div>
+                    </div>
                     <input type="number" id="num3" min="0" value="1" required>
                 </div>
                 <div class="input-group">
-                    <label for="num4">有几张1费?</label>
-                    <input type="number" id="num3" min="0" value="2" required>
+                    <div class="input-group horizontal">
+                        <label for="num4">有几张1费?</label>
+                        <div class="input-controls">
+                            <button class="control-btn" onclick="decrementValue('num4')">-</button>
+                            <button class="control-btn" onclick="incrementValue('num4')">+</button>
+                        </div>
+                    </div>
+                    <input type="number" id="num4" min="0" value="2" required>
                 </div>
                 <div class="input-group">
-                    <label for="num5">护符加攻?</label>
+                    <div class="input-group horizontal">
+                        <label for="num5">护符加攻?</label>
+                        <div class="input-controls">
+                            <button class="control-btn" onclick="decrementValue('num5')">-</button>
+                            <button class="control-btn" onclick="incrementValue('num5')">+</button>
+                        </div>
+                    </div>
                     <input type="number" id="num5" min="0" value="0" required>
                 </div>
             </div>
@@ -365,6 +410,31 @@
             
             const helperText = document.getElementById('helper-text');
             helperText.style.display = show ? 'block' : 'none';
+        }
+    </script>
+    <script>
+        function incrementValue(inputId) {
+            const input = document.getElementById(inputId);
+            const currentValue = parseInt(input.value) || 0;
+            input.value = currentValue + 1;
+            // 触发计算
+            calculate();
+            // 触发输入框的change事件以确保其他监听器生效
+            const event = new Event('change', { bubbles: true });
+            input.dispatchEvent(event);
+        }
+
+        function decrementValue(inputId) {
+            const input = document.getElementById(inputId);
+            const currentValue = parseInt(input.value) || 0;
+            if (currentValue > 0) {
+                input.value = currentValue - 1;
+                // 触发计算
+                calculate();
+                // 触发输入框的change事件以确保其他监听器生效
+                const event = new Event('change', { bubbles: true });
+                input.dispatchEvent(event);
+            }
         }
     </script>
 
