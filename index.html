@@ -327,8 +327,9 @@
                 console.log("额外出1费:", add1);
                 OutDamage = 1+use1cost+inputValues[2]+add1;
                 console.log("宝石兽连击", OutDamage);
-                const tol=2*OutDamage+3
-                OutDamage = tol;
+                const tol=2*OutDamage+3;
+                //加上宝石兽伤害
+                OutDamage = tol+1;
             } else {
                 OutDamage =  use1cost+inputValues[2]+1;
                 OutDamage = 2*OutDamage+1;
