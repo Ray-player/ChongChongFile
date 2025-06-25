@@ -322,9 +322,13 @@
             // 是否有宝石兽超进化
             if (selectedNames.includes("option3")) {
                 const add1 = inputValues[3] - use1cost >= 1 ? 1 : 0;
+                console.log("0费牌:", inputValues[2]);
+                console.log("1费牌:", inputValues[3]);
+                console.log("额外出1费:", add1);
                 OutDamage = 1+use1cost+inputValues[2]+add1;
                 console.log("宝石兽连击", OutDamage);
-                OutDamage = 2*OutDamage+2;
+                const tol=2*OutDamage+3
+                OutDamage = tol;
             } else {
                 OutDamage =  use1cost+inputValues[2]+1;
                 OutDamage = 2*OutDamage+1;
