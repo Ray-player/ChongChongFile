@@ -240,6 +240,38 @@
                 padding: 0.25em;
             }
         }
+
+        /* 移动端专属样式增强 */
+        @media (max-width: 600px) {
+            /* 增大输入框字体和内边距 */
+            input[type="number"] {
+                font-size: 16px;
+                padding: 12px;
+                min-height: 40px;
+            }
+
+            /* 增大水平输入组控件尺寸 */
+            .input-group.horizontal {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .input-group.horizontal label {
+                font-size: 16px;
+            }
+
+            /* 增大按钮尺寸和圆角 */
+            .control-btn {
+                font-size: 16px;
+                padding: 8px 12px;
+                border-radius: 6px;
+            }
+
+            /* 调整输出框字体大小 */
+            .output {
+                font-size: 44px;
+            }
+        }
     </style>
 </head>
 
