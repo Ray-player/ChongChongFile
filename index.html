@@ -5,8 +5,6 @@
     <meta charset="UTF-8">
     <title>鸭梨傻计算器</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -43,7 +41,8 @@
         .input-box {
             flex: 1 1 60%;
             min-width: 300px;
-            max-width: 400px; /* 添加最大宽度限制 */
+            max-width: 400px;
+            /* 添加最大宽度限制 */
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
@@ -53,8 +52,10 @@
             background-size: cover;
             background-position: center;
             z-index: 1;
-            opacity: 0.85; /* 添加整体透明度 */
-            margin-top: 2%; /* 增加顶部间距 */
+            opacity: 0.85;
+            /* 添加整体透明度 */
+            margin-top: 2%;
+            /* 增加顶部间距 */
             margin-left: 2%;
         }
 
@@ -112,7 +113,8 @@
             display: block;
             margin-bottom: 5px;
             width: 100%;
-            font-weight: bold; /* 添加粗体样式 */
+            font-weight: bold;
+            /* 添加粗体样式 */
         }
 
         input[type="number"] {
@@ -121,9 +123,12 @@
             box-sizing: border-box;
             display: block;
             margin-bottom: 10px;
-            border-radius: 4px; /* 添加圆角 */
-            border: 1px solid #ccc; /* 统一边框样式 */
-            background-color: rgba(255, 255, 255, 0.7); /* 半透明背景 */
+            border-radius: 4px;
+            /* 添加圆角 */
+            border: 1px solid #ccc;
+            /* 统一边框样式 */
+            background-color: rgba(255, 255, 255, 0.7);
+            /* 半透明背景 */
         }
 
         .damage-text {
@@ -150,11 +155,15 @@
 
         h1 {
             text-align: center;
-            font-size: 1.5625em; /* 25px -> 1.5625em (基于16px基准) */
-            margin-top: 1.25em; /* 20px -> 1.25em */
-            padding: 0.3125em; /* 5px -> 0.3125em */
+            font-size: 1.5625em;
+            /* 25px -> 1.5625em (基于16px基准) */
+            margin-top: 1.25em;
+            /* 20px -> 1.25em */
+            padding: 0.3125em;
+            /* 5px -> 0.3125em */
             background-color: #e2f7cfc9;
-            border-radius: 4px; /* 遵循CSS圆角规范 */
+            border-radius: 4px;
+            /* 遵循CSS圆角规范 */
         }
 
         /* 移动端帮助框样式 */
@@ -172,6 +181,15 @@
 
         /* 响应式布局调整 */
         @media (max-width: 600px) {
+            #helper-text {
+                display: none;
+            }
+
+            /* 显示移动端帮助框并隐藏桌面帮助 */
+            .mobile-helper {
+                display: block;
+            }
+
             .container {
                 flex-direction: column;
                 max-width: 100%;
@@ -191,14 +209,6 @@
                 margin-left: 1%;
             }
 
-            /* 显示移动端帮助框 */
-            .mobile-helper {
-                display: block;
-            }
-            .container #helper-text {
-        display: none; /* 移动端隐藏 desktop helper */
-    }
-
             input[type="number"] {
                 width: 100%;
                 max-width: 100%;
@@ -216,6 +226,7 @@
             }
         }
     </style>
+</head>
 
 <body>
     <!-- 新增移动端专用帮助框 -->
@@ -263,9 +274,9 @@
             <div class="output-box">
                 <div style="font-size: 25px; margin-top: 0;font-weight: bold">伤害：</div> <!-- 添加显式顶部间距控制 -->
                 <div class="output" style="font-size: 40px;color: rgb(30, 255, 0);" id="result">
-                 
+
                 </div>
-                
+
                 <div></div>
                 <a href="https://github.com/Ray-player/ChongChongFile" target="_blank" rel="noopener noreferrer" style="display: 
                 block; margin: 15px 0; color: #63cc00; text-decoration: underline;">交友♂网站</a>
@@ -274,7 +285,7 @@
     </div>
 </body>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const option2 = document.getElementById('option2');
         const option3 = document.getElementById('option3');
 
@@ -283,7 +294,7 @@
         if (!option2.checked) option3.checked = false;
 
         // 监听状态变化
-        option2.addEventListener('change', function() {
+        option2.addEventListener('change', function () {
             option3.disabled = !this.checked;
             if (!this.checked) option3.checked = false;
         });
@@ -320,33 +331,36 @@
                 OutDamage +=3;
             }
         } else {
-            OutDamage = use1cost+inputValues[2]+1;
-            OutDamage = 2*OutDamage+1;
-        }
+                OutDamage = use1cost+inputValues[2]+1;
+                OutDamage = 2*OutDamage+1;
+            }
 
-        // 是否启用回虫机制
-        if (selectedNames.includes("option1")) {
-            OutDamage -= 1;
-        }
-        OutDamage+=inputValues[1]+inputValues[4];
-        if(inputValues[0]<6){
+            // 是否启用回虫机制
+            if (selectedNames.includes("option1")) {
+                OutDamage -= 1;
+            }
+            OutDamage+=inputValues[1]+inputValues[4];
+            if(inputValues[0]<6){
+                document.getElementById('result').innerHTML = `
+             斩不了喵!
+            `;
+            }
+            else{
+            // 更新输出区域
             document.getElementById('result').innerHTML = `
-         斩不了喵!
-        `;
+             斩 ${OutDamage} !
+            `;
         }
-        else{
-        // 更新输出区域
-        document.getElementById('result').innerHTML = `
-         斩 ${OutDamage} !
-        `;
-    }
 
-    }
+        }
 
-    function showHelperText(show) {
-        const helperText = document.getElementById('helper-text');
-        helperText.style.display = show ? 'block' : 'none';
-    }
-</script>
+        function showHelperText(show) {
+            // 移动端强制不显示helper-text
+            if(window.innerWidth <= 600) return;
+            
+            const helperText = document.getElementById('helper-text');
+            helperText.style.display = show ? 'block' : 'none';
+        }
+    </script>
 
 </html>
